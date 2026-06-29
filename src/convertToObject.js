@@ -7,21 +7,23 @@
  */
 function convertToObject(sourceString) {
   const elements = sourceString.split(';');
-  const result = {};
 
-  elements.forEach((x) => {
+  const stylesObject = elements.reduce((prev, x) => {
     if (x.trim() === '') {
-      return;
+      return prev;
     }
 
     const parts = x.trim().split(':');
     const left = parts[0].trim();
     const right = parts[1].trim();
 
-    result[left] = right;
-  });
+    return {
+      ...prev,
+      [left]: right,
+    };
+  }, {});
 
-  return result;
+  return stylesObject;
 }
 
 module.exports = convertToObject;
